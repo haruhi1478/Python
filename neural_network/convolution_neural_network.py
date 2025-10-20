@@ -52,50 +52,7 @@ class CNN:
         self.thre_bp2 = -2 * rng.random(self.num_bp2) + 1
         self.thre_bp3 = -2 * rng.random(self.num_bp3) + 1
 
-    def save_model(self, save_path):
-        # save model dict with pickle
-        model_dic = {
-            "num_bp1": self.num_bp1,
-            "num_bp2": self.num_bp2,
-            "num_bp3": self.num_bp3,
-            "conv1": self.conv1,
-            "step_conv1": self.step_conv1,
-            "size_pooling1": self.size_pooling1,
-            "rate_weight": self.rate_weight,
-            "rate_thre": self.rate_thre,
-            "w_conv1": self.w_conv1,
-            "wkj": self.wkj,
-            "vji": self.vji,
-            "thre_conv1": self.thre_conv1,
-            "thre_bp2": self.thre_bp2,
-            "thre_bp3": self.thre_bp3,
-        }
-        with open(save_path, "wb") as f:
-            pickle.dump(model_dic, f)
-
-        print(f"Model saved: {save_path}")
-
-    @classmethod
-    def read_model(cls, model_path):
-        # read saved model
-        with open(model_path, "rb") as f:
-            model_dic = pickle.load(f)  # noqa: S301
-
-        conv_get = model_dic.get("conv1")
-        conv_get.append(model_dic.get("step_conv1"))
-        size_p1 = model_dic.get("size_pooling1")
-        bp1 = model_dic.get("num_bp1")
-        bp2 = model_dic.get("num_bp2")
-        bp3 = model_dic.get("num_bp3")
-        r_w = model_dic.get("rate_weight")
-        r_t = model_dic.get("rate_thre")
-        # create model instance
-        conv_ins = CNN(conv_get, size_p1, bp1, bp2, bp3, r_w, r_t)
-        # modify model parameter
-        conv_ins.w_conv1 = model_dic.get("w_conv1")
-        conv_ins.wkj = model_dic.get("wkj")
-        conv_ins.vji = model_dic.get("vji")
-        conv_ins.thre_conv1 = model_dic.get("thre_conv1")
+del_dic.get("thre_conv1")
         conv_ins.thre_bp2 = model_dic.get("thre_bp2")
         conv_ins.thre_bp3 = model_dic.get("thre_bp3")
         return conv_ins
