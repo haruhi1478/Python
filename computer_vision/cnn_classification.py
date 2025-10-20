@@ -62,6 +62,23 @@ if __name__ == "__main__":
 
     # Load Trained model weights
 
+    classifier.save("cnn.h5")
+
+    # Part 3 - Making new predictions
+
+    test_image = tf.keras.preprocessing.image.load_img(
+        "dataset/single_prediction/image.png", target_size=(64, 64)
+    )
+    test_image = tf.keras.preprocessing.image.img_to_array(test_image)
+    test_image = np.expand_dims(test_image, axis=0)
+    result = classifier.predict(test_image)
+    # training_set.class_indices
+    if result[0][0] == 0:
+        prediction = "Normal"
+    if result[0][0] == 1:
+        prediction = "Abnormality detected"
+
+
     # from keras.models import load_model
     # regressor=load_model('cnn.h5')
 
@@ -82,19 +99,3 @@ if __name__ == "__main__":
     classifier.fit_generator(
         training_set, steps_per_epoch=5, epochs=30, validation_data=test_set
     )
-
-    classifier.save("cnn.h5")
-
-    # Part 3 - Making new predictions
-
-    test_image = tf.keras.preprocessing.image.load_img(
-        "dataset/single_prediction/image.png", target_size=(64, 64)
-    )
-    test_image = tf.keras.preprocessing.image.img_to_array(test_image)
-    test_image = np.expand_dims(test_image, axis=0)
-    result = classifier.predict(test_image)
-    # training_set.class_indices
-    if result[0][0] == 0:
-        prediction = "Normal"
-    if result[0][0] == 1:
-        prediction = "Abnormality detected"
